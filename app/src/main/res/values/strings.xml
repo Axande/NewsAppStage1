@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">News App Stage 1</string>
     <string name="action_settings">Settings</string>
+
+    <string name="title">News app part I</string>
+    <string name="help_refresh">Refresh the news list</string>
+    <string name="help_add">Add extra 30 elements to the list</string>
+    <string name="loading">Loading...</string>
+    <string name="error">Something went wrong! :(</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="category">Category:</string>
 </resources>

@@ -1,3 +1,11 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="_4dp">4dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+
+    <dimen name="title_size">32sp</dimen>
+    <dimen name="error_size">24sp</dimen>
+    <dimen name="help_size">16sp</dimen>
 </resources>

@@ -9,34 +9,33 @@ import java.net.URL;
 
 /**
  * Created by Andrei on 13.04.2018.
- *
- * The model of the HttpHandler is taken from the Pokemon app
+ * <p>
+ * The model of the HttpHandler is taken from the Pokemon app.
+ * The handler has the role to connect to the API and get the data.
  */
 
 public class HttpHandler {
 
-    public HttpHandler(){
+    public HttpHandler() {
     }
 
-    public String makeHttpRequest(URL url) throws IOException{
+    public String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
 
         try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(10000);
+            urlConnection = (HttpURLConnection) url.openConnection();       //set connection
+            urlConnection.setRequestMethod("GET");                          //GET method for retrieving data
+            urlConnection.setReadTimeout(10000);                            //delays for no-answer handle
             urlConnection.setConnectTimeout(15000);
-            urlConnection.connect();
-            inputStream = urlConnection.getInputStream();
-            jsonResponse = convertStreamToString(inputStream);
+            urlConnection.connect();                                        //connect
+            inputStream = urlConnection.getInputStream();                   //get the date
+            jsonResponse = convertStreamToString(inputStream);              //convert the stream to string
 
-        } catch (IOException e) {
-            //handle the exception
-            //TODO: handle the exception of no internet - TO BE DELETED
-        } finally {
-            if (urlConnection != null) {
+        }   //the internet exception will be thrown to the calling class, no need to catch it here
+        finally {
+            if (urlConnection != null) {        //close connections
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
@@ -64,8 +63,6 @@ public class HttpHandler {
                 e.printStackTrace();
             }
         }
-
         return sb.toString();
     }
-
 }
