@@ -9,4 +9,5 @@
     <string name="error">Something went wrong! :(</string>
     <string name="placeholder">Placeholder</string>
     <string name="category">Category:</string>
+    <string name="author">Author: </string>
 </resources>

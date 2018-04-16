@@ -20,19 +20,19 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<News>> {
 
     public static int pageToLoad = 0;   //which page to be requested from API
-    int currentDisplay = 1; //1 = help, 200 = list of items, 404 = error
+    private int currentDisplay = 1; //1 = help, 200 = list of items, 404 = error
 
     public ArrayList<News> allNewsList = new ArrayList<>();
-    int lastItemOnPage = 0;       //index to the element to be in focus after an update of the array
+    private int lastItemOnPage = 0;       //index to the element to be in focus after an update of the array
 
-    ConnectivityManager cm;         //object to manage connectivity
-    NetworkInfo activeNetwork;
+    private ConnectivityManager cm;         //object to manage connectivity
+    private NetworkInfo activeNetwork;
 
     //all layouts that change visibility
-    LinearLayout layout_error;
-    LinearLayout layout_info;
-    ListView layout_list;
-    TextView layout_loading;
+    private LinearLayout layout_error;
+    private LinearLayout layout_info;
+    private ListView layout_list;
+    private TextView layout_loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

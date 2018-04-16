@@ -43,19 +43,29 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
 
         if (jsonString != null) {                           //there is a string of data
             try {
-                JSONObject jsonObj = new JSONObject(jsonString); //Convert the string to Json object
-                JSONArray rawNews = jsonObj.getJSONObject("response").getJSONArray("results"); //get the json node with results
+                final JSONObject jsonObj = new JSONObject(jsonString); //Convert the string to Json object
+                final JSONArray rawNews = jsonObj.getJSONObject("response").getJSONArray("results"); //get the json node with results
+
+                JSONArray tempArray;
+                JSONObject tempObj;
 
                 //save all nodes into News objects
                 for (int i = 0; i < rawNews.length(); i++) {
                     JSONObject c = rawNews.getJSONObject(i);
                     News oneEntry = new News();
 
-                    oneEntry.setDate(formatDate(c.getString("webPublicationDate"), 1));
-                    oneEntry.setTime(formatDate(c.getString("webPublicationDate"), 2));
-                    oneEntry.setTitle(c.getString("webTitle"));
-                    oneEntry.setWebUrl(c.getString("webUrl"));
-                    oneEntry.setCategory(c.getString("sectionName"));
+                    oneEntry.setDate(formatDate(c.optString("webPublicationDate"), 1));
+                    oneEntry.setTime(formatDate(c.optString("webPublicationDate"), 2));
+                    oneEntry.setTitle(c.optString("webTitle"));
+                    oneEntry.setWebUrl(c.optString("webUrl"));
+                    oneEntry.setCategory(c.optString("sectionName"));
+
+                    //get the author from the requested tags
+                    tempArray = c.getJSONArray("tags");
+                    if (tempArray.length() != 0) {
+                        tempObj = tempArray.getJSONObject(0);
+                        oneEntry.setAuthor(tempObj.optString("webTitle"));
+                    }
 
                     loadedNews.add(oneEntry);
                 }
@@ -86,7 +96,7 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
      */
     private URL createUrl() {
         URL url;
-        String stringUrl = "https://content.guardianapis.com/search?q=sport&section=sport&page=" + MainActivity.pageToLoad + "&page-size=30&api-key=f410ec8e-d4be-419c-b77d-dfb3d818a0d7";
+        String stringUrl = "https://content.guardianapis.com/search?q=sport&section=sport&page=" + MainActivity.pageToLoad + "&page-size=30&api-key=f410ec8e-d4be-419c-b77d-dfb3d818a0d7&show-tags=contributor";
 
         try {
             url = new URL(stringUrl);

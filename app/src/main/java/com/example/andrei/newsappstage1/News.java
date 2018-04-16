@@ -1,5 +1,7 @@
 package com.example.andrei.newsappstage1;
 
+import android.widget.TextView;
+
 /**
  * Created by Andrei on 13.04.2018.
  * <p>
@@ -13,6 +15,7 @@ public class News {
     private String title = "";
     private String webUrl = "";
     private String category = "";
+    private String author = "";
 
     public News() {
     }
@@ -55,5 +58,13 @@ public class News {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

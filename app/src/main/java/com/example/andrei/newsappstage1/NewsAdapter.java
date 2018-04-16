@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -27,23 +29,42 @@ public class NewsAdapter extends ArrayAdapter<News> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final News currentNews = getItem(position);
-        View listItem = convertView;
-        if (convertView == null) {
-            //inflate the list item layout
-            listItem = LayoutInflater.from(getContext()).inflate(R.layout.news_layout, parent, false);
-        }
+        ViewHolder holder;
 
-        //update current news
-        TextView title = listItem.findViewById(R.id.individual_news_title);
-        title.setText(currentNews.getTitle());
-        TextView date = listItem.findViewById(R.id.individual_news_date);
-        date.setText(currentNews.getDate());
-        TextView time = listItem.findViewById(R.id.individual_news_time);
-        time.setText(currentNews.getTime());
-        TextView category = listItem.findViewById(R.id.individual_category);
-        category.setText(currentNews.getCategory());
-        //return the created object
-        return listItem;
+        if (convertView == null) {
+            //inflate the list item layout and save the layout details
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.news_layout, parent, false);
+            holder = new ViewHolder();
+            holder.titleTextView = convertView.findViewById(R.id.individual_news_title);
+            holder.dateTextView = convertView.findViewById(R.id.individual_news_date);
+            holder.timeTextView = convertView.findViewById(R.id.individual_news_time);
+            holder.categoryTextView = convertView.findViewById(R.id.individual_category);
+            holder.authorTextView = convertView.findViewById(R.id.individual_author);
+            convertView.setTag(holder);
+        } else { //reuse the layout
+            holder = (ViewHolder) convertView.getTag();
+        }
+        News currentNews = getItem(position);
+
+        //update teh fields
+        holder.titleTextView.setText(currentNews.getTitle());
+        holder.dateTextView.setText(currentNews.getDate());
+        holder.timeTextView.setText(currentNews.getTime());
+        holder.categoryTextView.setText(currentNews.getCategory());
+        if (currentNews.getAuthor().equals("")) {
+            holder.authorTextView.setVisibility(View.GONE);
+        } else {
+            holder.authorTextView.setText(currentNews.getAuthor());
+            holder.authorTextView.setVisibility(View.VISIBLE);
+        }
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        private TextView titleTextView;
+        private TextView dateTextView;
+        private TextView timeTextView;
+        private TextView categoryTextView;
+        private TextView authorTextView;
     }
 }
